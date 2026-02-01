@@ -1,37 +1,73 @@
-            "Look how sad the button is! Red = Anger! 😡",
-            "Okay, last chance to find the right button... 🔍"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Mehvish Vhora</title>
+    <style>
+        body { margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #fff0f3; font-family: 'Segoe UI', sans-serif; overflow: hidden; text-align: center; }
+        .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 85%; max-width: 400px; position: relative; }
+        h1 { color: #ff4d6d; font-size: 22px; }
+        .buttons { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 20px; min-height: 80px; position: relative; }
+        button { padding: 12px 25px; font-size: 18px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; z-index: 10; }
+        #yesBtn { background-color: #ff4d6d; color: white; display: none; } /* Hidden at first */
+        #noBtn { background-color: #f8f9fa; color: #333; position: absolute; }
+        #noBtn:active { background-color: #ff0000 !important; color: white; }
+        .meme-img { width: 150px; height: 150px; margin-bottom: 10px; border-radius: 10px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="memeImg" class="meme-img" src="" alt="Sad Meme">
+        <h1 id="question">Mehvish Vhora, will you be my Valentine?</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">Yes! ❤️</button>
+            <button id="noBtn" onclick="playGame()" onmouseover="playGame()">No</button>
+        </div>
+    </div>
+
+    <script>
+        let attempts = 0;
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const memeImg = document.getElementById('memeImg');
+        const questionText = document.getElementById('question');
+
+        const memeUrls = [
+            "https://media.giphy.com/media/7SF5scGB2AFrO/giphy.gif", // Sad cat
+            "https://media.giphy.com/media/d2lcHJTG5Tscg/giphy.gif", // Crying
+            "https://media.giphy.com/media/OPU6wUKFt8H5u/giphy.gif", // Spongbob sad
+            "https://media.giphy.com/media/j0qSbeNFuzjhXKFVSP/giphy.gif" // Puppy eyes
         ];
 
-        function moveButton() {
-            clickCount++;
-            const noBtn = document.getElementById('noBtn');
-            const memeDisplay = document.getElementById('memeText');
+        function playGame() {
+            attempts++;
             
-            // Random movement
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40);
+            // Move the NO button randomly
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 50);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
+            noBtn.style.position = 'fixed';
 
-            // Show sad "memes" (text)
-            if (clickCount <= memes.length) {
-                memeDisplay.innerText = memes[clickCount - 1];
+            // Show sad memes and change text
+            if (attempts > 1) {
+                memeImg.style.display = "block";
+                memeImg.src = memeUrls[attempts % memeUrls.length];
+                questionText.innerText = "Why are you clicking No? 🥺 Try " + (8 - attempts) + " more times...";
             }
 
-            // After 7 tries, show the YES button and hide NO
-            if (clickCount >= 7) {
-                document.getElementById('yesBtn').style.display = 'block';
-                noBtn.style.display = 'none';
-                memeDisplay.innerText = "Fine! I've hidden the 'No' button. Now you HAVE to say Yes! 😉";
+            // After 7 attempts, reveal YES and hide NO
+            if (attempts >= 7) {
+                noBtn.style.display = "none";
+                yesBtn.style.display = "block";
+                questionText.innerText = "Okay, I give up. There is no 'No' left. Say Yes? ❤️";
+                memeImg.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueHByZ3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/ISOckXUqbVrihcE9M9/giphy.gif";
             }
         }
 
         function celebrate() {
-            document.getElementById('question').innerHTML = "I KNEW IT! Best Valentine ever, Mehvish! 🎉💖";
-            document.getElementById('memeText').innerText = "Sending you a virtual hug! 🤗";
-            document.getElementById('yesBtn').style.transform = "scale(1.5)";
-            document.body.style.backgroundColor = "#ffccd5";
-        }
-    </script>
-</body>
-</html>
+            questionText.innerText = "YAY! Best Valentine Ever! 💖";
+            memeImg.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueHByZ3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lH4ADRtAYnGsLe/giphy.gif";
+            yesBtn.innerHTML = "I Love You! 😘";
+            document.body.style.background
